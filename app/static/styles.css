@@ -1,16 +1,27 @@
+html,body{
+    height: 100%;
+    /* overflow:hidden; */
+}
+
+.panel-heading {
+    font-family: Lobster, Monospace;
+}
 .panel-body {
     overflow-y: scroll;
     height: 85%;
 }
 
-#chat-bottom {
+/* #chat-bottom {
     position: fixed;
     bottom: 10px;
     padding-left : 8%;
     padding-right: 8%;
     background: white;
-}
+} */
 
+.container-fluid{
+    height: 100%;
+}
 
 .list-group-item {
     margin-bottom: 15px;
