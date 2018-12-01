@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from .models import Suit,Question
+from random import randint
 # Create your views here.
 def index(request):
     return render(request, "index.html",) # {'home': 'active', 'chat': 'chat'})
@@ -12,9 +13,28 @@ def Post(request):
     #     chat.conversation["general"].append('initiate')
     if request.method == "POST":
         query = request.POST.get('msgbox', None)
-        print(query)
+        suit = int(request.POST.get('suit',None))
+        qs = int(request.POST.get('qs',None))
+        print(suit,qs)
         response = "Ok\n"
-        return JsonResponse({'response': response,'query': query})
+        if( suit == -1 and qs == -1):
+            count = Suit.objects.count()
+            random_suit = Suit.objects.all()[randint(0, count - 1)]
+            response = random_suit.q1.question
+            suit = random_suit.id
+            qs = 1
+        elif qs == 1 :
+            used_suit = Suit.objects.get(pk=suit)
+            qs = 2
+            response = used_suit.q2.question
+        elif qs == 2 :
+            used_suit = Suit.objects.get(pk=suit)
+            qs = 3
+            response = used_suit.q3.question
+        elif qs == 3 :
+            qs = 4
+            response = "Good job! Enough pratice for the day. Take a break."
+        return JsonResponse({'response': response,'query': query,'suit':suit,'qs':qs})
 
     else:
         return HttpResponse('Request must be POST.')
