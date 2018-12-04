@@ -31,7 +31,7 @@ $('#chat-form').on('submit', function(event){
 $(document).ready(function() {
     $('#send').attr('disabled','disabled');
     $('#chat-msg').keyup(function() {
-       if($(this).val() != '') {
+       if($(this).val() != '' && qs != 4) {
           $('#send').removeAttr('disabled');
        }
        else {
